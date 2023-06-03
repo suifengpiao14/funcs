@@ -1,0 +1,1 @@
+copy from `goa.design/goa/v3` and change var commonInitialisms
