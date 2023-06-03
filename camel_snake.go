@@ -244,7 +244,3 @@ func ToLowerCamel(name string) string {
 func ToSnakeCase(name string) string {
 	return SnakeCase(name)
 }
-
-func StandardizeSpaces(s string) string {
-	return strings.Join(strings.Fields(s), " ")
-}
