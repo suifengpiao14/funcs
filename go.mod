@@ -1,4 +1,4 @@
-module github.com/suifengpiao14/camelsnake
+module github.com/suifengpiao14/helpers
 
 go 1.19
 

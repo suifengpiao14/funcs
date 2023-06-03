@@ -1,11 +1,11 @@
-package camelsnake
+package helpers
 
 import (
 	"bytes"
 	"strings"
 	"unicode"
 
-	"github.com/suifengpiao14/camelsnake/expr"
+	"github.com/suifengpiao14/helpers/expr"
 )
 
 // Casing exceptions
@@ -227,3 +227,24 @@ var (
 		// "XSS":   true,
 	}
 )
+
+// TrimSpaces  去除开头结尾的非有效字符
+func TrimSpaces(s string) string {
+	return strings.Trim(s, "\r\n\t\v\f ")
+}
+
+func ToCamel(name string) string {
+	return CamelCase(name, true, true)
+}
+
+func ToLowerCamel(name string) string {
+	return CamelCase(name, false, true)
+}
+
+func ToSnakeCase(name string) string {
+	return SnakeCase(name)
+}
+
+func StandardizeSpaces(s string) string {
+	return strings.Join(strings.Fields(s), " ")
+}
