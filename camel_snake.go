@@ -5,7 +5,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/suifengpiao14/helpers/expr"
+	"github.com/suifengpiao14/funcs/expr"
 )
 
 // Casing exceptions

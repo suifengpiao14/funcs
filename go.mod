@@ -1,4 +1,4 @@
-module github.com/suifengpiao14/helpers
+module github.com/suifengpiao14/funcs
 
 go 1.19
 
