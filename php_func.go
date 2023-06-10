@@ -1,4 +1,4 @@
-package helpers
+package funcs
 
 func Addslashes(str string) string {
 	var tmpRune []rune
