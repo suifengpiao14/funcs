@@ -1,5 +1,7 @@
 package funcs
 
+import "strings"
+
 func Addslashes(str string) string {
 	var tmpRune []rune
 	for _, ch := range str {
@@ -12,4 +14,14 @@ func Addslashes(str string) string {
 		}
 	}
 	return string(tmpRune)
+}
+
+func Strtr(str string, replace map[string]string) string {
+	if len(replace) == 0 || len(str) == 0 {
+		return str
+	}
+	for old, new := range replace {
+		str = strings.ReplaceAll(str, old, new)
+	}
+	return str
 }
