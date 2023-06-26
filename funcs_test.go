@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 	"github.com/suifengpiao14/funcs"
 )
 
@@ -21,8 +20,7 @@ func TestStructToMap(t *testing.T) {
 		Id:   1,
 		Name: "name",
 	}
-	m, err := funcs.StructToMap(&s)
-	require.NoError(t, err)
+	m := funcs.StructToMap(&s)
 	expeced := map[string]interface{}{
 		"age":    0,
 		"belive": "",
