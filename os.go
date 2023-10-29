@@ -7,7 +7,7 @@ import (
 )
 
 func GetRuntimeFilePath() (filepath string, err error) {
-	_, filename, _, ok := runtime.Caller(0)
+	_, filename, _, ok := runtime.Caller(1) // 跳过当前包函数
 	if ok {
 		return path.Dir(filename), nil
 	}
