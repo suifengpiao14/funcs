@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/suifengpiao14/funcs"
 )
 
@@ -13,8 +14,9 @@ func TestGetCallFuncname(t *testing.T) {
 }
 
 func TestGetFuncname(t *testing.T) {
-	funcName := funcs.GetFuncname(abc)
-	fmt.Println(funcName)
+	fn := abc
+	funcName := funcs.GetFuncname(fn)
+	assert.Equal(t, "abc", funcName)
 }
 
 func abc() {}
