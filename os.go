@@ -2,6 +2,7 @@ package funcs
 
 import (
 	"errors"
+	"fmt"
 	"path"
 	"reflect"
 	"runtime"
@@ -35,12 +36,19 @@ func GetFuncname(fn any) (funcname string) {
 	if fnPtr == nil {
 		return ""
 	}
-	fullName := fnPtr.Name()
-	lastSlash := strings.LastIndex(fullName, "/")
-	funcname = fullName
-	if lastSlash > -1 {
-		funcname = fullName[lastSlash+1:]
-	}
+	funcname = fnPtr.Name()
 	return funcname
+}
 
+func SplitFullFuncName(fullName string) (packageName string, funcName string) {
+	lastSlash := strings.LastIndex(fullName, "/")
+	packageName = fullName
+	if lastSlash > -1 {
+		packageName = fullName[:lastSlash+1]
+		funcName = fullName[lastSlash+1:]
+	}
+	arr := strings.SplitN(funcName, ".", 2)
+	packageName = fmt.Sprintf("%s%s", packageName, arr[0])
+	funcName = arr[1]
+	return packageName, funcName
 }

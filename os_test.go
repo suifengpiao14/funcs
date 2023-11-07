@@ -16,9 +16,15 @@ func TestGetCallFuncname(t *testing.T) {
 func TestGetFuncname(t *testing.T) {
 	fn := abc()
 	funcName := funcs.GetFuncname(fn)
-	assert.Equal(t, "funcs_test.abc.func1", funcName)
+	assert.Equal(t, "github.com/suifengpiao14/funcs_test.abc.func1", funcName)
 }
 
 func abc() (fn func()) {
 	return func() {}
+}
+
+func TestSplitFuncName(t *testing.T) {
+	packName, funcName := funcs.SplitFullFuncName("github.com/suifengpiao14/funcs_test.abc.func1")
+	assert.Equal(t, "github.com/suifengpiao14/funcs_test", packName)
+	assert.Equal(t, "abc.func1", funcName)
 }
