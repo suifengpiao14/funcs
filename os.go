@@ -35,7 +35,7 @@ func GetFuncname(fn any) (funcname string) {
 		return ""
 	}
 	fullName := fnPtr.Name()
-	lastSlash := strings.LastIndex(fullName, ".")
+	lastSlash := strings.LastIndex(fullName, "/")
 	funcname = fullName
 	if lastSlash > -1 {
 		funcname = fullName[lastSlash+1:]

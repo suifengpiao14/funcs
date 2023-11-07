@@ -14,9 +14,11 @@ func TestGetCallFuncname(t *testing.T) {
 }
 
 func TestGetFuncname(t *testing.T) {
-	fn := abc
+	fn := abc()
 	funcName := funcs.GetFuncname(fn)
-	assert.Equal(t, "abc", funcName)
+	assert.Equal(t, "funcs_test.abc.func1", funcName)
 }
 
-func abc() {}
+func abc() (fn func()) {
+	return func() {}
+}
