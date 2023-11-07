@@ -19,10 +19,11 @@ func GetRuntimeFilePath() (filepath string, err error) {
 }
 
 // GetCallFuncname 获取调用当前函数的名称
-func GetCallFuncname() (funcname string) {
+func GetCallFuncname(skip int) (funcname string) {
 	var pcArr [32]uintptr // at least 1 entry needed
 	var frames *runtime.Frames
-	n := runtime.Callers(2, pcArr[:])
+	skip += 2
+	n := runtime.Callers(skip, pcArr[:])
 	frames = runtime.CallersFrames(pcArr[:n])
 	frame, _ := frames.Next()
 	funcname = frame.Function

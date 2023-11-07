@@ -9,7 +9,7 @@ import (
 )
 
 func TestGetCallFuncname(t *testing.T) {
-	funcName := funcs.GetCallFuncname()
+	funcName := funcs.GetCallFuncname(0)
 	fmt.Println(funcName)
 }
 
