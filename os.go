@@ -3,7 +3,9 @@ package funcs
 import (
 	"errors"
 	"path"
+	"reflect"
 	"runtime"
+	"strings"
 )
 
 func GetRuntimeFilePath() (filepath string, err error) {
@@ -25,4 +27,19 @@ func GetCallFuncname() (funcname string) {
 	frame, _ := frames.Next()
 	funcname = frame.Function
 	return funcname
+}
+
+func GetFuncname(fn any) (funcname string) {
+	fnPtr := runtime.FuncForPC(reflect.ValueOf(fn).Pointer())
+	if fnPtr == nil {
+		return ""
+	}
+	fullName := fnPtr.Name()
+	lastSlash := strings.LastIndex(fullName, ".")
+	funcname = fullName
+	if lastSlash > -1 {
+		funcname = fullName[lastSlash+1:]
+	}
+	return funcname
+
 }
