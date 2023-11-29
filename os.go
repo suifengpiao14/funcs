@@ -19,6 +19,18 @@ func GetRuntimeFilePath() (filepath string, err error) {
 	return path.Dir(filename), nil
 }
 
+//GetStructName 获取结构体名称
+func GetStructName(s interface{}) string {
+	t := reflect.TypeOf(s)
+	for {
+		if t.Kind() != reflect.Ptr {
+			break
+		}
+		t = t.Elem()
+	}
+	return t.Name()
+}
+
 // GetCallFuncname 获取调用当前函数的名称
 func GetCallFuncname(skip int) (funcname string) {
 	var pcArr [32]uintptr // at least 1 entry needed

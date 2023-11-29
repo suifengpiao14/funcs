@@ -28,3 +28,14 @@ func TestSplitFuncName(t *testing.T) {
 	assert.Equal(t, "github.com/suifengpiao14/funcs_test", packName)
 	assert.Equal(t, "abc.func1", funcName)
 }
+
+type User struct {
+	ID string
+}
+
+func TestReflectName(t *testing.T) {
+	u := new(User)
+	name := funcs.GetStructName(u)
+	fmt.Println(name)
+
+}
