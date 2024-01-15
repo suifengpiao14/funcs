@@ -3,6 +3,9 @@ package funcs
 import "reflect"
 
 func IsNil(v interface{}) bool {
+	if v == nil {
+		return true
+	}
 	valueOf := reflect.ValueOf(v)
 	k := valueOf.Kind()
 	switch k {
