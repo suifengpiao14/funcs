@@ -3,6 +3,7 @@ package funcs
 import (
 	"errors"
 	"fmt"
+	"os"
 	"path"
 	"reflect"
 	"runtime"
@@ -63,4 +64,19 @@ func SplitFullFuncName(fullName string) (packageName string, funcName string) {
 	packageName = fmt.Sprintf("%s%s", packageName, arr[0])
 	funcName = arr[1]
 	return packageName, funcName
+}
+
+func FileExists(filePath string) (bool, error) {
+	_, err := os.Stat(filePath)
+
+	if err == nil {
+		// 文件存在
+		return true, nil
+	}
+	if os.IsNotExist(err) {
+		// 文件不存在
+		return false, nil
+	}
+	// 其他错误，例如权限问题等
+	return false, err
 }
