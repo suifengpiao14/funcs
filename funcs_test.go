@@ -1,6 +1,7 @@
 package funcs_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -28,4 +29,25 @@ func TestStructToMap(t *testing.T) {
 		"name":   "name",
 	}
 	assert.EqualValues(t, expeced, m)
+}
+
+func TestColumn(t *testing.T) {
+	s := []TestStruct{
+		{
+			Id:   1,
+			Name: "name",
+		},
+		{
+			Id:   2,
+			Name: "name",
+		},
+	}
+	m := funcs.Column(s, func(row TestStruct) int {
+		return row.Id
+	})
+	fmt.Println(m)
+}
+func TestUniqueue(t *testing.T) {
+	m := funcs.Uniqueue([]int{1, 1, 3, 3, 6})
+	fmt.Println(m)
 }
