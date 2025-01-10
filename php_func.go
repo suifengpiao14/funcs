@@ -2,6 +2,42 @@ package funcs
 
 import "strings"
 
+func JsonEscape(value string) string { // 转义json字符串中的特殊字符，copy于mysql的escape_string函数
+
+	dest := make([]byte, 0, 2*len(value))
+	var escape byte
+	for i := 0; i < len(value); i++ {
+		c := value[i]
+		escape = 0
+		switch c {
+		case 0: /* Must be escaped for 'mysql' */
+			escape = '0'
+		case '\n': /* Must be escaped for logs */
+			escape = 'n'
+		case '\r':
+			escape = 'r'
+		case '\t':
+			escape = 't'
+		case '\\':
+			escape = '\\'
+		case '\'':
+			escape = '\''
+		case '"': /* Better safe than sorry */
+			escape = '"'
+		case '\032': //十进制26,八进制32,十六进制1a, /* This gives problems on Win32 */
+			escape = 'Z'
+		}
+
+		if escape != 0 {
+			dest = append(dest, '\\', escape)
+		} else {
+			dest = append(dest, c)
+		}
+	}
+
+	return string(dest)
+}
+
 func Addslashes(str string) string {
 	var tmpRune []rune
 	for _, ch := range str {
