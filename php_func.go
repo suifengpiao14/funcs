@@ -1,6 +1,9 @@
 package funcs
 
-import "strings"
+import (
+	"reflect"
+	"strings"
+)
 
 func JsonEscape(value string) string { // 转义json字符串中的特殊字符，copy于mysql的escape_string函数
 
@@ -134,6 +137,28 @@ func Filter[T any](rows []T, fn func(one T) bool) (sub []T) {
 	}
 	return sub
 }
+
+func FilterEmpty[T any](rows []T) []T {
+	return Filter(rows, func(one T) bool {
+		switch v := any(one).(type) {
+		case string, *string:
+			return v != ""
+		case int, int32, int64, *int, *int64, *int32:
+			return v != 0
+		case []byte:
+			return len(v) != 0
+		case *[]byte:
+			return len(*v) != 0
+		default:
+			rv := reflect.Indirect(reflect.ValueOf(one))
+			if !rv.IsValid() || rv.IsNil() || rv.IsZero() {
+				return false
+			}
+		}
+		return true
+	})
+}
+
 func Walk[T any](rows []T, fn func(one *T) (err error)) (err error) {
 	for _, v := range rows {
 		if err = fn(&v); err != nil {
