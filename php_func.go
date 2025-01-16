@@ -184,3 +184,26 @@ func Strtr(str string, replace map[string]string) string {
 	}
 	return str
 }
+
+// SliceInsert 切片插入元素
+func SliceInsert[T any](sc *[]T, item T, index int) {
+	if len(*sc) == 0 {
+		*sc = append(*sc, item)
+		return
+	}
+	// 确保index是有效的
+	if index <= 0 {
+		*sc = append([]T{item}, *sc...)
+		return
+	}
+	if index >= len(*sc) {
+		*sc = append(*sc, item)
+		return
+	}
+	// 将切片分为两部分，插入a到index的位置
+	befor := (*sc)[:index]
+	after := (*sc)[index:]
+	befor = append(befor, item)
+	befor = append(befor, after...)
+	*sc = befor
+}
