@@ -160,8 +160,8 @@ func FilterEmpty[T any](rows []T) []T {
 }
 
 func Walk[T any](rows []T, fn func(one *T) (err error)) (err error) {
-	for _, v := range rows {
-		if err = fn(&v); err != nil {
+	for i := 0; i < len(rows); i++ {
+		if err = fn(&rows[i]); err != nil {
 			return err
 		}
 	}
