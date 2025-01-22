@@ -159,9 +159,9 @@ func FilterEmpty[T any](rows []T) []T {
 	})
 }
 
-func Walk[T any](rows []T, fn func(one *T) (err error)) (err error) {
+func Walk[T any](rows []T, fn func(one *T, index int) (err error)) (err error) {
 	for i := 0; i < len(rows); i++ {
-		if err = fn(&rows[i]); err != nil {
+		if err = fn(&rows[i], i); err != nil {
 			return err
 		}
 	}
