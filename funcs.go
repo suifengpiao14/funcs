@@ -50,6 +50,19 @@ func Struct2MapString(i interface{}) (out map[string]string, err error) {
 	return out, nil
 }
 
+func Struct2JsonMap(rows any) map[string]any {
+	data, err := json.Marshal(rows)
+	if err != nil {
+		panic(err)
+	}
+	m := make(map[string]any)
+	err = json.Unmarshal(data, &m)
+	if err != nil {
+		panic(err)
+	}
+	return m
+}
+
 // 拷贝 sync.oncefunc.go 低版本go 不支持 go 1.21 版本才有，直接复制
 // OnceValue returns a function that invokes f only once and returns the value
 // returned by f. The returned function may be called concurrently.
