@@ -96,6 +96,18 @@ func UniqueueWithKeyFn[T any](arr []T, keyFn func(row T) (key string)) []T {
 	return result
 }
 
+func GroupBy[T any](arr []T, groupValue func(row T) (key string)) map[string][]T {
+	m := make(map[string][]T)
+	for _, v := range arr {
+		groupVal := groupValue(v)
+		if _, ok := m[groupVal]; !ok {
+			m[groupVal] = make([]T, 0)
+		}
+		m[groupVal] = append(m[groupVal], v)
+	}
+	return m
+}
+
 func Contains[T int | int64 | string](arr []T, v T) bool {
 	for _, v2 := range arr {
 		if v == v2 {
