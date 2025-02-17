@@ -83,6 +83,19 @@ func Uniqueue[T any](arr []T) []T {
 	return result
 }
 
+func UniqueueWithKeyFn[T any](arr []T, keyFn func(row T) (key string)) []T {
+	var result []T
+	m := make(map[string]struct{})
+	for _, v := range arr {
+		key := keyFn(v)
+		if _, ok := m[key]; !ok {
+			m[key] = struct{}{}
+			result = append(result, v)
+		}
+	}
+	return result
+}
+
 func Contains[T int | int64 | string](arr []T, v T) bool {
 	for _, v2 := range arr {
 		if v == v2 {
