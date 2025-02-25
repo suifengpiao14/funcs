@@ -200,6 +200,15 @@ func Map[T any, v any](rows []T, fn func(one T) (value v)) (values []v) {
 	return values
 }
 
+func Reverse[T any](arr []T) (reversed []T) {
+	reversed = make([]T, 0)
+	for i := len(arr) - 1; i >= 0; i-- {
+		reversed = append(reversed, arr[i])
+	}
+	return reversed
+
+}
+
 func Strtr(str string, replace map[string]string) string {
 	if len(replace) == 0 || len(str) == 0 {
 		return str

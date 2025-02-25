@@ -51,3 +51,8 @@ func TestUniqueue(t *testing.T) {
 	m := funcs.Uniqueue([]int{1, 1, 3, 3, 6})
 	fmt.Println(m)
 }
+
+func TestReverse(t *testing.T) {
+	m := funcs.Reverse([]int{1, 2, 3, 8})
+	fmt.Println(m)
+}
