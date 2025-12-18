@@ -59,8 +59,19 @@ func TestReverse(t *testing.T) {
 }
 
 func TestFormatCityCode(t *testing.T) {
-	m := funcs.FormatCityCode("1234", 6)
-	require.Equal(t, m, "123400")
+
+	t.Run("4->6", func(t *testing.T) {
+		m := funcs.FormatCityCode("1234", 6)
+		require.Equal(t, m, "123400")
+	})
+	t.Run("6->4", func(t *testing.T) {
+		m := funcs.FormatCityCode("1234000", 4)
+		require.Equal(t, m, "1234")
+	})
+	t.Run(`""->""`, func(t *testing.T) {
+		m := funcs.FormatCityCode("", 4)
+		require.Equal(t, m, "")
+	})
 }
 
 func TestStrin(t *testing.T) {
