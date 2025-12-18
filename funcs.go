@@ -2,35 +2,31 @@ package funcs
 
 import (
 	"encoding/json"
+	"fmt"
 	"reflect"
+	"strings"
 	"sync"
 
 	"github.com/pkg/errors"
 	"github.com/spf13/cast"
 )
 
-func String(v any) string {
-	if v == nil {
+// FormatCityCode 城市id 经常有4位、6位格式，这里做一个格式化处理，保证长度一致
+func FormatCityCode(cityCode string, size int) string {
+	if cityCode == "" {
 		return ""
 	}
-	switch v := v.(type) {
-	case string:
-		return v
-		// 如果是切片，则转换为字符串
-	case []byte:
-		return string(v)
+	s := fmt.Sprintf(`%s%s`, cityCode, strings.Repeat("0", size))[:size]
+	return s
+}
 
-	default:
-		s, err := cast.ToStringE(v)
-		if err == nil {
-			return s
-		}
-		b, err := json.Marshal(v)
-		if err == nil {
-			return string(b)
-		}
-		return string(b)
+func JsonString(v any) string {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err.Error()
 	}
+	s := string(b)
+	return s
 }
 
 func StructToMap(obj interface{}) map[string]interface{} {

@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/suifengpiao14/funcs"
 )
 
@@ -54,5 +55,15 @@ func TestUniqueue(t *testing.T) {
 
 func TestReverse(t *testing.T) {
 	m := funcs.Reverse([]int{1, 2, 3, 8})
+	fmt.Println(m)
+}
+
+func TestFormatCityCode(t *testing.T) {
+	m := funcs.FormatCityCode("1234", 6)
+	require.Equal(t, m, "123400")
+}
+
+func TestStrin(t *testing.T) {
+	m := funcs.JsonString(map[string]any{})
 	fmt.Println(m)
 }
