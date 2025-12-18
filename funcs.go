@@ -9,6 +9,30 @@ import (
 	"github.com/spf13/cast"
 )
 
+func String(v any) string {
+	if v == nil {
+		return ""
+	}
+	switch v := v.(type) {
+	case string:
+		return v
+		// 如果是切片，则转换为字符串
+	case []byte:
+		return string(v)
+
+	default:
+		s, err := cast.ToStringE(v)
+		if err == nil {
+			return s
+		}
+		b, err := json.Marshal(v)
+		if err == nil {
+			return string(b)
+		}
+		return string(b)
+	}
+}
+
 func StructToMap(obj interface{}) map[string]interface{} {
 	v := reflect.Indirect(reflect.ValueOf(obj))
 	t := v.Type()
