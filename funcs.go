@@ -21,6 +21,9 @@ func FormatCityCode(cityCode string, size int) string {
 }
 
 func JsonString(v any) string {
+	if v == nil {
+		return ""
+	}
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err.Error()
