@@ -24,6 +24,9 @@ func JsonString(v any) string {
 	if v == nil {
 		return ""
 	}
+	if IsNil(v) {
+		return ""
+	}
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err.Error()
