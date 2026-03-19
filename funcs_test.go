@@ -78,3 +78,25 @@ func TestStrin(t *testing.T) {
 	m := funcs.JsonString(map[string]any{})
 	fmt.Println(m)
 }
+
+// 定义测试结构体（包含嵌套、不同类型字段）
+type UserInfo struct {
+	Age  int    // 偏移量 0
+	Name string // 偏移量 8（64位系统 int 占8字节）
+}
+
+type User2 struct {
+	ID   uint64   // 偏移量 0
+	Info UserInfo // 偏移量 8
+	Addr string   // 偏移量 8+16=24（UserInfo 占 8+16=24 字节）
+	Flag bool     // 偏移量 24+16=40
+}
+
+func TestGetByFieldAddress(t *testing.T) {
+	// 测试调用
+	user := User2{}
+	fs := funcs.NewStructFields(&user)
+	f := fs.GetByFieldAddress(&user.Addr)
+	require.Equal(t, "Addr", f.GetName())
+
+}
