@@ -140,16 +140,24 @@ func (f *StructField) GetName() string {
 // StructFields 结构体字段列表
 type StructFields []StructField
 
+func (s StructFields) GetNames() []string {
+	var names []string
+	for _, v := range s {
+		names = append(names, v.GetName())
+	}
+	return names
+}
+
 // NewStructFields 解析结构体（或结构体指针）的所有字段信息
 // 参数 struc：结构体指针
 // 返回值：包含所有导出字段的 StructFields 列表
-func NewStructFields(struc any) (structFields StructFields) {
+func NewStructFields[T any](struc *T) (structFields StructFields) {
 	if struc == nil {
 		return nil
 	}
 	// 1. 获取结构体的反射值和类型（处理指针）
 	val := reflect.ValueOf(struc)
-	for val.Kind() != reflect.Ptr {
+	for val.Kind() != reflect.Pointer {
 		err := errors.New("struc must be a pointer to a struct")
 		panic(err)
 	}
@@ -249,7 +257,7 @@ func (fs StructFields) GetByFieldAddress(attrAddr any) (field *StructField) {
 
 	// 1. 获取字段指针的内存地址
 	fieldPtr := reflect.ValueOf(attrAddr)
-	if fieldPtr.Kind() != reflect.Ptr {
+	if fieldPtr.Kind() != reflect.Pointer {
 		err := errors.New("attrAddr must be a pointer")
 		panic(err)
 	}
@@ -271,6 +279,6 @@ func (fs StructFields) GetByFieldAddress(attrAddr any) (field *StructField) {
 		}
 	}
 
-	err := errors.New("can not find field by address")
+	err := errors.Errorf("StructFields.GetByFieldAddress:can not find field by address:%v", attrAddr)
 	panic(err)
 }
