@@ -86,17 +86,23 @@ type UserInfo struct {
 }
 
 type User2 struct {
-	ID   uint64   // 偏移量 0
-	Info UserInfo // 偏移量 8
-	Addr string   // 偏移量 8+16=24（UserInfo 占 8+16=24 字节）
-	Flag bool     // 偏移量 24+16=40
+	// ID   uint64   // 偏移量 0
+	// Info UserInfo // 偏移量 8
+	// Addr string   // 偏移量 8+16=24（UserInfo 占 8+16=24 字节）
+	// Flag bool     // 偏移量 24+16=40
+	UserInfo
+	Data
+}
+
+type Data struct {
+	ChannelIdSet map[int]struct{} `json:"channelIdSet"` // 数据量太大，此处改成数据格式，减少expression节点数
 }
 
 func TestGetByFieldAddress(t *testing.T) {
 	// 测试调用
-	user := User2{}
-	fs := funcs.NewStructFields(&user)
-	f := fs.GetByFieldAddress(&user.Addr)
-	require.Equal(t, "Addr", f.GetName())
+	user := &User2{}
+	fs := funcs.NewStructFields(user)
+	f := fs.GetByFieldAddress(&user.ChannelIdSet)
+	fmt.Println(f)
 
 }

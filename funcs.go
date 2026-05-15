@@ -262,17 +262,11 @@ func (fs StructFields) GetByFieldAddress(attrAddr any) (field *StructField) {
 		panic(err)
 	}
 	fieldAddr := fieldPtr.UnsafePointer()
-	var structPtr unsafe.Pointer
 	// 2. 遍历所有字段，匹配内存地址
 	for i := range fs {
 		f := &fs[i]
-		// 获取结构体实例的起始地址
-		if structPtr == nil {
-			structPtr = f.structRef.UnsafePointer()
-		}
 		// 计算字段的理论地址 = 结构体起始地址 + 字段偏移量
-		expectedAddr := unsafe.Add(structPtr, f.offset)
-
+		expectedAddr := unsafe.Add(f.structRef.UnsafePointer(), f.offset)
 		// 地址匹配则返回该字段
 		if expectedAddr == fieldAddr {
 			return f
