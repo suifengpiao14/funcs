@@ -11,7 +11,7 @@ type QueueWithLength[T comparable] struct {
 	queue  []T
 }
 
-func (fs *QueueWithLength[T]) Push(inqueue T) (pops []T) {
+func (fs *QueueWithLength[T]) Push(inqueue T) (pops []T, isAppend bool) {
 	fs.lock.Lock()
 	defer fs.lock.Unlock()
 	if slices.Contains(fs.queue, inqueue) { // 已存在，不重复添加
@@ -24,5 +24,5 @@ func (fs *QueueWithLength[T]) Push(inqueue T) (pops []T) {
 		fs.queue = fs.queue[fileLength-fs.Length:]
 	}
 
-	return pops
+	return pops, true
 }

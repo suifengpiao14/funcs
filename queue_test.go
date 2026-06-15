@@ -11,16 +11,20 @@ func TestQueueWithLengthString(t *testing.T) {
 	fs := funcs.QueueWithLength[string]{
 		Length: 3,
 	}
-	pops := fs.Push("a")
+	pops, isAppend := fs.Push("a")
 	assert.Equal(t, []string(nil), pops)
-	pops = fs.Push("b")
+	assert.True(t, isAppend)
+	pops, isAppend = fs.Push("b")
 	assert.Equal(t, []string(nil), pops)
-	pops = fs.Push("c")
+	assert.True(t, isAppend)
+	pops, isAppend = fs.Push("c")
 	assert.Equal(t, []string(nil), pops)
+	assert.True(t, isAppend)
+	pops, isAppend = fs.Push("a")
+	assert.Equal(t, []string(nil), pops)
+	assert.False(t, isAppend)
 
-	pops = fs.Push("a")
-	assert.Equal(t, []string(nil), pops)
-
-	pops = fs.Push("d")
+	pops, isAppend = fs.Push("d")
 	assert.Equal(t, []string{"a"}, pops)
+	assert.True(t, isAppend)
 }
